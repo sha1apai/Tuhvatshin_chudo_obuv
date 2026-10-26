@@ -1,0 +1,77 @@
+﻿<Page x:Class="Tuhvatshin_chudo_obuv.ProductPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Tuhvatshin_chudo_obuv"
+      mc:Ignorable="d" 
+      d:DesignHeight="650" d:DesignWidth="1200" FontFamily="Calibri"
+      Title="ProductPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto" ></RowDefinition>
+        </Grid.RowDefinitions>
+        <WrapPanel>
+            <TextBox  Margin="10" Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged" FontSize="15" Width="200" HorizontalAlignment="Left"></TextBox>
+            <ComboBox Name="CategoryCombo" Width="150" Margin="0,0,10,0"
+          SelectionChanged="CategoryCombo_SelectionChanged"/>
+            <!-- Фильтр по производителю -->
+            <ComboBox Name="ManufacturerCombo" Width="150" Margin="0,0,10,0"
+          SelectionChanged="ManufacturerCombo_SelectionChanged"/>
+            <!-- Сортировка -->
+            <ComboBox Name="SortCombo" Width="150" Margin="0,0,10,0"
+          SelectionChanged="SortCombo_SelectionChanged">
+                <ComboBoxItem Content="Без сортировки" IsSelected="True"/>
+                <ComboBoxItem Content="По названию"/>
+                <ComboBoxItem Content="По цене (убыв.)"/>
+            </ComboBox>
+        </WrapPanel>
+        <ListView Name="ProductListView" Grid.Row="1" HorizontalContentAlignment="Stretch" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"></ColumnDefinition>
+                            <ColumnDefinition Width="800"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Image Width="300" Grid.Column="0" Stretch="UniformToFill" HorizontalAlignment="Center" Grid.RowSpan="3">
+                            <Image.Source>
+                                <Binding Path="ImageURL">
+                                    <Binding.TargetNullValue>
+                                        <ImageSource>
+                                            res/picture.png
+                                        </ImageSource>
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
+                        </Image>
+                        <WrapPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding Product.Manufacturer}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
+                            <TextBlock Text=" | " FontSize="20"></TextBlock>
+                            <TextBlock Text="{Binding Product.Name}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
+                        </WrapPanel>
+                        
+                        <TextBlock Text="{Binding Product.Categories.CategoryName, StringFormat=Категория: {0}}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="20" ></TextBlock>
+                        <TextBlock Text="{Binding QuantityStatus, StringFormat=Количество: {0}}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
+                        <TextBlock Text="{Binding Product.Price, StringFormat={}{0:0} рублей}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" FontSize="30" ></TextBlock>
+                        <TextBlock Text="{Binding Product.Composition, StringFormat=Состав: {0}}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+    </Grid>
+</Page>

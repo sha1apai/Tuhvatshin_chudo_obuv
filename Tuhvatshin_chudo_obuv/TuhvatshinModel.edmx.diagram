@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3ecc860131c246d98603d1d787b83db7" Name="Diagram1">
+        <EntityTypeShape EntityType="Tuhvatshin_chudo_obuvModel.Categories" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tuhvatshin_chudo_obuvModel.OrderItems" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tuhvatshin_chudo_obuvModel.Orders" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tuhvatshin_chudo_obuvModel.ProductItems" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tuhvatshin_chudo_obuvModel.Products" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tuhvatshin_chudo_obuvModel.Roles" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tuhvatshin_chudo_obuvModel.Sizes" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tuhvatshin_chudo_obuvModel.SubCategories" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tuhvatshin_chudo_obuvModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tuhvatshin_chudo_obuvModel.Users" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <AssociationConnector Association="Tuhvatshin_chudo_obuvModel.FK_Products_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="Tuhvatshin_chudo_obuvModel.FK_OrderItems_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="Tuhvatshin_chudo_obuvModel.FK_OrderItems_ProductItems" ManuallyRouted="false" />
+        <AssociationConnector Association="Tuhvatshin_chudo_obuvModel.FK_Orders_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="Tuhvatshin_chudo_obuvModel.FK_ProductItems_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="Tuhvatshin_chudo_obuvModel.FK_ProductItems_Sizes" ManuallyRouted="false" />
+        <AssociationConnector Association="Tuhvatshin_chudo_obuvModel.FK_Products_SubCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="Tuhvatshin_chudo_obuvModel.FK_Users_Roles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
