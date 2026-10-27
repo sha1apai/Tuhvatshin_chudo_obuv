@@ -14,21 +14,15 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto" ></RowDefinition>
         </Grid.RowDefinitions>
-        <WrapPanel>
-            <TextBox  Margin="10" Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged" FontSize="15" Width="200" HorizontalAlignment="Left"></TextBox>
-            <ComboBox Name="CategoryCombo" Width="150" Margin="0,0,10,0"
-          SelectionChanged="CategoryCombo_SelectionChanged"/>
-            <!-- Фильтр по производителю -->
-            <ComboBox Name="ManufacturerCombo" Width="150" Margin="0,0,10,0"
-          SelectionChanged="ManufacturerCombo_SelectionChanged"/>
-            <!-- Сортировка -->
-            <ComboBox Name="SortCombo" Width="150" Margin="0,0,10,0"
-          SelectionChanged="SortCombo_SelectionChanged">
-                <ComboBoxItem Content="Без сортировки" IsSelected="True"/>
-                <ComboBoxItem Content="По названию"/>
-                <ComboBoxItem Content="По цене (убыв.)"/>
-            </ComboBox>
-        </WrapPanel>
+        <ComboBox x:Name="ComboSort" SelectionChanged="ComboSort_SelectionChanged" BorderBrush="#70B2AF" BorderThickness="2"
+                  FontSize="15" FontFamily="Calibri" Grid.Column="2" Margin="10,86,90,10">
+            <TextBlock><Run Text="сортировка"/></TextBlock>
+            <TextBlock><Run Text="от А до Я"/></TextBlock>
+            <TextBlock><Run Text="от Я до А"/></TextBlock>
+        </ComboBox>
+        <TextBox x:Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged"
+                 FontSize="15" BorderBrush="#70B2AF" BorderThickness="2" RenderTransformOrigin="0.475,0.459" Grid.Column="1" Margin="75,86,75,10"/>
+        <TextBlock Text="поиск по наименованию" FontSize="15" Foreground="#3E2C23" FontFamily="Calibri" Grid.Column="1" Margin="75,60,167,42"/>
         <ListView Name="ProductListView" Grid.Row="1" HorizontalContentAlignment="Stretch" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -65,7 +59,7 @@
                         </WrapPanel>
                         
                         <TextBlock Text="{Binding Product.Categories.CategoryName, StringFormat=Категория: {0}}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="20" ></TextBlock>
-                        <TextBlock Text="{Binding QuantityStatus, StringFormat=Количество: {0}}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
+                        <TextBlock Text="{Binding TotalQuantity, StringFormat=В наличии: {0} шт.}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                         <TextBlock Text="{Binding Product.Price, StringFormat={}{0:0} рублей}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" FontSize="30" ></TextBlock>
                         <TextBlock Text="{Binding Product.Composition, StringFormat=Состав: {0}}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                     </Grid>
