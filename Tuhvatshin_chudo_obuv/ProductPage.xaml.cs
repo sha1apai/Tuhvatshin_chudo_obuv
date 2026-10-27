@@ -24,15 +24,11 @@ namespace Tuhvatshin_chudo_obuv
         public ProductPage()
         {
             InitializeComponent();
-            var context = Tuhvatshin_chudo_obuvEntities.GetContext();
-            var products = context.Products.ToList();
+            var currentProducts = Tuhvatshin_chudo_obuvEntities.GetContext().Products.ToList();
+            ProductListView.ItemsSource = currentProducts;
 
-            var productViewModels = products.Select(product => new
-            {
-                Product = product,
-                QuantityStatus = product.ProductItems.Sum(p => p.Quantity) > 5 ? "много" : "мало"
-            }).ToList();
-            ProductListView.ItemsSource = productViewModels;
+            ComboSort.SelectedIndex = 0;
+
             Update();
         }
         private void Update()

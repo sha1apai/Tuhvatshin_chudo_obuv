@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tuhvatshin_chudo_obuv
 {
-    public partial class ProductQuantity
+    public partial class Products
     {
         public int TotalQuantity => ProductItems?.Sum(s => s.Quantity) ?? 0;
     }

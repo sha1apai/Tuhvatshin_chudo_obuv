@@ -53,15 +53,15 @@
                             </Image.Source>
                         </Image>
                         <WrapPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center">
-                            <TextBlock Text="{Binding Product.Manufacturer}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
+                            <TextBlock Text="{Binding Manufacturer}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                             <TextBlock Text=" | " FontSize="20"></TextBlock>
-                            <TextBlock Text="{Binding Product.Name}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
+                            <TextBlock Text="{Binding Name}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                         </WrapPanel>
                         
-                        <TextBlock Text="{Binding Product.Categories.CategoryName, StringFormat=Категория: {0}}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="20" ></TextBlock>
+                        <TextBlock Text="{Binding Categories.CategoryName, StringFormat=Категория: {0}}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="20" ></TextBlock>
                         <TextBlock Text="{Binding TotalQuantity, StringFormat=В наличии: {0} шт.}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
-                        <TextBlock Text="{Binding Product.Price, StringFormat={}{0:0} рублей}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" FontSize="30" ></TextBlock>
-                        <TextBlock Text="{Binding Product.Composition, StringFormat=Состав: {0}}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
+                        <TextBlock Text="{Binding Price, StringFormat={}{0:0} рублей}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" FontSize="30" ></TextBlock>
+                        <TextBlock Text="{Binding Composition, StringFormat=Состав: {0}}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
