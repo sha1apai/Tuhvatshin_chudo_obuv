@@ -21,9 +21,25 @@ namespace Tuhvatshin_chudo_obuv
     public partial class ProductPage : Page
     {
 
-        public ProductPage()
+        public ProductPage(Users users)
         {
             InitializeComponent();
+            FIOTB.Text = users.LastName + " " + users.FirstName + " " + users.MiddleName;
+            switch (users.RoleID)
+            {
+                case 1:
+                    RoleTB.Text = "Клиент";
+                    break;
+                case 2:
+                    RoleTB.Text = "Менеджер";
+                    break;
+                case 3:
+                    RoleTB.Text = "Администратор";
+                    break;
+                default:
+                    RoleTB.Text = "Гость";
+                    break;
+            }
             var currentProducts = Tuhvatshin_chudo_obuvEntities.GetContext().Products.ToList();
             ProductListView.ItemsSource = currentProducts;
 
@@ -34,14 +50,14 @@ namespace Tuhvatshin_chudo_obuv
         private void Update()
         {
             var currentProducts = Tuhvatshin_chudo_obuvEntities.GetContext().Products.ToList();
-            currentProducts = currentProducts.Where(p => p.Name.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList(); //Tbox это само поле ввода, а text это переменная которая хранит то что написано внутри
+            currentProducts = currentProducts.Where(p => p.Name.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList(); 
 
             ProductListView.ItemsSource = currentProducts.ToList();
 
             if (ComboSort.SelectedIndex == 1)
-                currentProducts = currentProducts.OrderBy(p => p.Name).ToList(); //сортировка по возрастанию
+                currentProducts = currentProducts.OrderBy(p => p.Name).ToList();
             if (ComboSort.SelectedIndex == 2)
-                currentProducts = currentProducts.OrderByDescending(p => p.Name).ToList(); //сортировка по убыванию
+                currentProducts = currentProducts.OrderByDescending(p => p.Name).ToList();
 
             ProductListView.ItemsSource = currentProducts;
         }
