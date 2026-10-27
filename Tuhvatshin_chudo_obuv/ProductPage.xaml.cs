@@ -44,29 +44,58 @@ namespace Tuhvatshin_chudo_obuv
             ProductListView.ItemsSource = currentProducts;
 
             ComboSort.SelectedIndex = 0;
+            ComboType.SelectedIndex = 0;
 
             Update();
         }
         private void Update()
         {
             var currentProducts = Tuhvatshin_chudo_obuvEntities.GetContext().Products.ToList();
-            currentProducts = currentProducts.Where(p => p.Name.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList(); 
 
-            ProductListView.ItemsSource = currentProducts.ToList();
+            if (ComboType.SelectedIndex == 1)
+            {
+                currentProducts = currentProducts.Where(p => p.CategoryID == 2).ToList();
+            }
+            else if (ComboType.SelectedIndex == 2)
+            {
+                currentProducts = currentProducts.Where(p => p.CategoryID == 3).ToList();
+            }
+            else if (ComboType.SelectedIndex == 3)
+            {
+                currentProducts = currentProducts.Where(p => p.CategoryID == 1).ToList();
+            }
+
+            currentProducts = currentProducts.Where(p => p.Name.ToLower().Contains(TBSearch.Text.ToLower())
+            || p.Manufacturer.ToLower().Contains(TBSearch.Text.ToLower())
+            || p.SubCategories.SubcategoryName.ToLower().Contains(TBSearch.Text.ToLower())).ToList();
+
 
             if (ComboSort.SelectedIndex == 1)
-                currentProducts = currentProducts.OrderBy(p => p.Name).ToList();
+            {
+                currentProducts = currentProducts.OrderBy(p => p.Price).ToList();
+            }
             if (ComboSort.SelectedIndex == 2)
-                currentProducts = currentProducts.OrderByDescending(p => p.Name).ToList();
-
-            ProductListView.ItemsSource = currentProducts;
+            {
+                currentProducts = currentProducts.OrderByDescending(p => p.Price).ToList();
+            }
+            ProductListView.ItemsSource = currentProducts.ToList();
         }
+
+
+
+
+
         private void ComboSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Update();
         }
 
-        private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        private void ComboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update();
+        }
+
+        private void TBSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             Update();
         }
