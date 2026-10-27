@@ -45,32 +45,26 @@ namespace Tuhvatshin_chudo_obuv
         {
             string login = LoginTextBox.Text.Trim();
 
-            // Проверка на пустые поля
             if (string.IsNullOrEmpty(login))
             {
                 MessageBox.Show("Введите логин!", "Ошибка",
                               MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
-            // Поиск пользователя в БД
             Users user = Tuhvatshin_chudo_obuvEntities.GetContext().Users
                 .FirstOrDefault(p => p.Login == LoginTextBox.Text);
 
             if (user != null)
             {
-                // Успешный вход
                 LoginTextBox.Text = "";
                 Manager.MainFrame.Navigate(new ProductPage(user));
             }
             else
             {
-                // Неверный логин или пароль
                 failedAttempts++;
 
-                if (failedAttempts == 1)
+                if (failedAttempts > 0)
                 {
-                    // Первая неудачная попытка — показываем капчу
                     MessageBox.Show("Введены неверные данные!",
                                   "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
