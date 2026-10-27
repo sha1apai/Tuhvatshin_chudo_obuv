@@ -41,12 +41,12 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <Image Width="300" Grid.Column="0" Stretch="UniformToFill" HorizontalAlignment="Center" Grid.RowSpan="3">
+                        <Image Width="300" Grid.Column="0" Stretch="UniformToFill" HorizontalAlignment="Center" Grid.RowSpan="4">
                             <Image.Source>
-                                <Binding Path="ImageURL">
+                                <Binding Path="ProductPhotoPath">
                                     <Binding.TargetNullValue>
                                         <ImageSource>
-                                            res/picture.png
+                                            /res/picture.png
                                         </ImageSource>
                                     </Binding.TargetNullValue>
                                 </Binding>

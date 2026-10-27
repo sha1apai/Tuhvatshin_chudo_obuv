@@ -21,11 +21,23 @@ namespace Tuhvatshin_chudo_obuv
         }
     
         public int ProductID { get; set; }
+      
+
         public int SubCategoryID { get; set; }
         public int CategoryID { get; set; }
         public string Manufacturer { get; set; }
         public string Name { get; set; }
         public string ImageURL { get; set; }
+        public string ProductPhotoPath
+        {
+            get
+            {
+                if (ImageURL == null)
+                    return null;
+
+                return "/res/Images/" + ImageURL;
+            }
+        }
         public string Description { get; set; }
         public string Composition { get; set; }
         public decimal Price { get; set; }
