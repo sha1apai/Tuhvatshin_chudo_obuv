@@ -20,10 +20,20 @@ namespace Tuhvatshin_chudo_obuv
     /// </summary>
     public partial class ProductPage : Page
     {
+        private bool _isGuest;
 
         public ProductPage(Users users)
         {
             InitializeComponent();
+            _isGuest = users.RoleID == 0;
+
+            if (_isGuest)
+            {
+                ComboSort.Visibility = Visibility.Collapsed;
+                ComboType.Visibility = Visibility.Collapsed;
+                TBSearch.Visibility = Visibility.Collapsed;
+            }
+
             FIOTB.Text = users.LastName + " " + users.FirstName + " " + users.MiddleName;
             switch (users.RoleID)
             {
@@ -38,6 +48,7 @@ namespace Tuhvatshin_chudo_obuv
                     break;
                 default:
                     RoleTB.Text = "Гость";
+                    _isGuest = true;
                     break;
             }
             var currentProducts = Tuhvatshin_chudo_obuvEntities.GetContext().Products.ToList();
@@ -51,7 +62,6 @@ namespace Tuhvatshin_chudo_obuv
         private void Update()
         {
             var currentProducts = Tuhvatshin_chudo_obuvEntities.GetContext().Products.ToList();
-
             if (ComboType.SelectedIndex == 1)
             {
                 currentProducts = currentProducts.Where(p => p.CategoryID == 2).ToList();
@@ -67,7 +77,8 @@ namespace Tuhvatshin_chudo_obuv
 
             currentProducts = currentProducts.Where(p => p.Name.ToLower().Contains(TBSearch.Text.ToLower())
             || p.Manufacturer.ToLower().Contains(TBSearch.Text.ToLower())
-            || p.SubCategories.SubcategoryName.ToLower().Contains(TBSearch.Text.ToLower())).ToList();
+            || p.SubCategories.SubcategoryName.ToLower().Contains(TBSearch.Text.ToLower())
+            || p.Composition.ToLower().Contains(TBSearch.Text.ToLower())).ToList();
 
 
             if (ComboSort.SelectedIndex == 1)

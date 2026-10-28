@@ -33,7 +33,7 @@ namespace Tuhvatshin_chudo_obuv
             get
             {
                 if (ImageURL == null)
-                    return null;
+                    return "/res/picture.png";
 
                 return "/res/Images/" + ImageURL;
             }
