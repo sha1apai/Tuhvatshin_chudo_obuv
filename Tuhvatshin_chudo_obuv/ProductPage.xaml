@@ -44,8 +44,8 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="300"></ColumnDefinition>
-                            <ColumnDefinition Width="800"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="650"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"></RowDefinition>
@@ -56,14 +56,14 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <Image Width="300" Grid.Column="0" Stretch="UniformToFill" HorizontalAlignment="Center" Grid.RowSpan="4">
+                        <Image Width="300" Grid.Column="0" Stretch="UniformToFill" HorizontalAlignment="Center" Grid.RowSpan="5">
                             <Image.Source>
                                 <Binding Path="ProductPhotoPath">
-                                    <Binding.TargetNullValue>
-                                        <ImageSource>
-                                            res/picture.png
+                                    <!--<Binding.TargetNullValue>-->
+                                    <!--<ImageSource>
+                                            /res/picture.png
                                         </ImageSource>
-                                    </Binding.TargetNullValue>
+                                    </Binding.TargetNullValue>-->
                                 </Binding>
                             </Image.Source>
                         </Image>
@@ -72,15 +72,15 @@
                             <TextBlock Text=" | " FontSize="20"></TextBlock>
                             <TextBlock Text="{Binding Name}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                         </WrapPanel>
-                        
+
                         <TextBlock Text="{Binding Categories.CategoryName, StringFormat=Категория: {0}}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="20" ></TextBlock>
                         <TextBlock Text="{Binding TotalQuantity, StringFormat=В наличии: {0} шт.}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
-                        <TextBlock Text="{Binding Price, StringFormat={}{0:0} рублей}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" FontSize="30" ></TextBlock>
-                        <TextBlock Text="{Binding Composition, StringFormat=Состав: {0}}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
+                        <TextBlock Text="{Binding Price, StringFormat={}{0:0} рублей}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" FontSize="20" ></TextBlock>
+                        <TextBlock Text="{Binding Composition, StringFormat=Состав: {0}}" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
+                        <Button Content="Офрмить заказ"  Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.RowSpan="5" Name="BtnBuy" Click="BtnBuy_Click" ></Button>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-
         </ListView>
     </Grid>
 </Page>

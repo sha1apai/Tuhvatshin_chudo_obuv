@@ -20,21 +20,25 @@ namespace Tuhvatshin_chudo_obuv
     /// </summary>
     public partial class ProductPage : Page
     {
+        private readonly Users _user;
+        private readonly List<OrderItems> _draftItems;
         private bool _isGuest;
 
         public ProductPage(Users users)
+            : this(users, new List<OrderItems>())
+        {
+        }
+
+        public ProductPage(Users users, List<OrderItems> draftItems)
         {
             InitializeComponent();
+
+            _user = users;
+            _draftItems = draftItems ?? new List<OrderItems>();
             _isGuest = users.RoleID == 0;
 
-            if (_isGuest)
-            {
-                ComboSort.Visibility = Visibility.Collapsed;
-                ComboType.Visibility = Visibility.Collapsed;
-                TBSearch.Visibility = Visibility.Collapsed;
-            }
-
             FIOTB.Text = users.LastName + " " + users.FirstName + " " + users.MiddleName;
+
             switch (users.RoleID)
             {
                 case 1:
@@ -51,50 +55,67 @@ namespace Tuhvatshin_chudo_obuv
                     _isGuest = true;
                     break;
             }
-            var currentProducts = Tuhvatshin_chudo_obuvEntities.GetContext().Products.ToList();
-            ProductListView.ItemsSource = currentProducts;
+
+            if (_isGuest)
+            {
+                ComboSort.Visibility = Visibility.Collapsed;
+                ComboType.Visibility = Visibility.Collapsed;
+                TBSearch.Visibility = Visibility.Collapsed;
+            }
 
             ComboSort.SelectedIndex = 0;
             ComboType.SelectedIndex = 0;
-
             Update();
         }
+
         private void Update()
         {
-            var currentProducts = Tuhvatshin_chudo_obuvEntities.GetContext().Products.ToList();
+            var products = Tuhvatshin_chudo_obuvEntities.GetContext()
+                .Products
+                .ToList();
+
+            if (_isGuest)
+            {
+                ProductListView.ItemsSource = products;
+                return;
+            }
+
             if (ComboType.SelectedIndex == 1)
             {
-                currentProducts = currentProducts.Where(p => p.CategoryID == 2).ToList();
+                products = products.Where(p => p.CategoryID == 2).ToList();
             }
             else if (ComboType.SelectedIndex == 2)
             {
-                currentProducts = currentProducts.Where(p => p.CategoryID == 3).ToList();
+                products = products.Where(p => p.CategoryID == 3).ToList();
             }
             else if (ComboType.SelectedIndex == 3)
             {
-                currentProducts = currentProducts.Where(p => p.CategoryID == 1).ToList();
+                products = products.Where(p => p.CategoryID == 1).ToList();
             }
 
-            currentProducts = currentProducts.Where(p => p.Name.ToLower().Contains(TBSearch.Text.ToLower())
-            || p.Manufacturer.ToLower().Contains(TBSearch.Text.ToLower())
-            || p.SubCategories.SubcategoryName.ToLower().Contains(TBSearch.Text.ToLower())
-            || p.Composition.ToLower().Contains(TBSearch.Text.ToLower())).ToList();
+            string search = TBSearch.Text?.Trim().ToLower() ?? string.Empty;
 
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                products = products.Where(p =>
+                    (p.Name ?? string.Empty).ToLower().Contains(search) ||
+                    (p.Manufacturer ?? string.Empty).ToLower().Contains(search) ||
+                    (p.SubCategories?.SubcategoryName ?? string.Empty).ToLower().Contains(search) ||
+                    (p.Composition ?? string.Empty).ToLower().Contains(search))
+                    .ToList();
+            }
 
             if (ComboSort.SelectedIndex == 1)
             {
-                currentProducts = currentProducts.OrderBy(p => p.Price).ToList();
+                products = products.OrderBy(p => p.Price).ToList();
             }
-            if (ComboSort.SelectedIndex == 2)
+            else if (ComboSort.SelectedIndex == 2)
             {
-                currentProducts = currentProducts.OrderByDescending(p => p.Price).ToList();
+                products = products.OrderByDescending(p => p.Price).ToList();
             }
-            ProductListView.ItemsSource = currentProducts.ToList();
+
+            ProductListView.ItemsSource = products;
         }
-
-
-
-
 
         private void ComboSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -110,7 +131,25 @@ namespace Tuhvatshin_chudo_obuv
         {
             Update();
         }
+
+        private void BtnBuy_Click(object sender, RoutedEventArgs e)
+        {
+            if (_isGuest)
+            {
+                MessageBox.Show("Для оформления заказа необходимо войти в систему.");
+                return;
+            }
+
+            var button = sender as FrameworkElement;
+            var product = button?.DataContext as Products;
+
+            if (product == null)
+            {
+                MessageBox.Show("Не удалось определить выбранный товар.");
+                return;
+            }
+
+            Manager.MainFrame.Navigate(new AddEditPage(_user, product, _draftItems));
+        }
     }
-
-
 }

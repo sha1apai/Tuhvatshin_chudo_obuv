@@ -1,0 +1,73 @@
+﻿<Page x:Class="Tuhvatshin_chudo_obuv.AddEditPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Оформление заказа"
+      FontFamily="Calibri">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="180"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="{Binding Name}" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+            <Grid Grid.Row="1" Margin="0,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Height="220" Stretch="UniformToFill" Source="{Binding ProductPhotoPath}"/>
+                <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                    <TextBlock Text="{Binding Manufacturer, StringFormat=Производитель: {0}}"
+                               FontSize="18" Margin="0,0,0,8"/>
+                    <TextBlock Text="{Binding Name, StringFormat=Наименование: {0}}"
+                               FontSize="18" Margin="0,0,0,8"/>
+                    <TextBlock Text="{Binding Categories.CategoryName, StringFormat=Категория: {0}}"
+                               FontSize="18" Margin="0,0,0,8"/>
+                    <TextBlock Text="{Binding Price, StringFormat={}{0:0.00} руб.}"
+                               FontSize="20" FontWeight="Bold" Margin="0,0,0,8"/>
+                    <TextBlock Text="{Binding Composition, StringFormat=Состав: {0}}"
+                               FontSize="16" TextWrapping="Wrap" Margin="0,0,0,8"/>
+                    <TextBlock Text="{Binding Description, StringFormat=Описание: {0}}"
+                               FontSize="16" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Размер:" VerticalAlignment="Center" FontSize="16"/>
+                <ComboBox Name="ComboSize" Height="20" Width="120" Margin="8,0,20,0" DisplayMemberPath="Sizes.SizeValue" SelectionChanged="ComboSize_SelectionChanged"/>
+                <TextBlock Text="Количество:" VerticalAlignment="Center" FontSize="16"/>
+                <TextBox Name="QuantityTextBox" Height="20" Width="70" Text="1" Margin="8,0,20,0" VerticalContentAlignment="Center"/>
+                <Button Name="AddItemButton" Content="Добавить позицию" Click="AddItemButton_Click"/>
+            </StackPanel>
+            <TextBlock Grid.Row="3" Text="Позиции заказа" FontSize="20" FontWeight="Bold" Margin="0,5,0,5"/>
+            <ListView Grid.Row="4" Name="CartListView">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Товар" Width="300"
+                                        DisplayMemberBinding="{Binding ProductItems.Products.Name}"/>
+                        <GridViewColumn Header="Размер" Width="100"
+                                        DisplayMemberBinding="{Binding ProductItems.Sizes.SizeValue}"/>
+                        <GridViewColumn Header="Количество" Width="110"
+                                        DisplayMemberBinding="{Binding Quantity}"/>
+                        <GridViewColumn Header="Цена" Width="110"
+                                        DisplayMemberBinding="{Binding UnitPrice}"/>
+                        <GridViewColumn Header="Сумма" Width="110"
+                                        DisplayMemberBinding="{Binding TotalPrice}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <WrapPanel Grid.Row="5" HorizontalAlignment="Right" Margin="0,12,0,0">
+                <Button Content="Удалить позицию" Margin="0,0,8,0" Click="RemoveItemButton_Click"/>
+                <Button Content="Выбрать ещё товары" Margin="0,0,8,0" Click="ChooseMoreButton_Click"/>
+                <Button Content="Подтвердить заказ" Margin="0,0,8,0" Click="ConfirmOrderButton_Click"/>
+                <Button Content="Отменить" Click="CancelButton_Click"/>
+            </WrapPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>
