@@ -272,18 +272,16 @@ namespace Tuhvatshin_chudo_obuv
                     foreach (var product in _topProducts)
                     {
                         graphics.DrawString(
-                            product.Name ?? string.Empty,
+                            FitText(graphics, regularFont, product.Name, 250),
                             regularFont,
                             XBrushes.Black,
-                            new XRect(left, y, 250, 30),
-                            XStringFormats.TopLeft);
+                            new XPoint(left, y));
 
                         graphics.DrawString(
-                            product.Manufacturer ?? string.Empty,
+                            FitText(graphics, regularFont, product.Manufacturer, 160),
                             regularFont,
                             XBrushes.Black,
-                            new XRect(300, y, 160, 30),
-                            XStringFormats.TopLeft);
+                            new XPoint(300, y));
 
                         graphics.DrawString(
                             product.Quantity.ToString(),
@@ -314,6 +312,29 @@ namespace Tuhvatshin_chudo_obuv
                     MessageBoxImage.Error);
             }
         }
+
+        private static string FitText(
+    XGraphics graphics,
+    XFont font,
+    string value,
+    double maxWidth)
+{
+    var text = value ?? string.Empty;
+    const string ellipsis = "…";
+
+    if (graphics.MeasureString(text, font).Width <= maxWidth)
+    {
+        return text;
+    }
+
+    while (text.Length > 0 &&
+           graphics.MeasureString(text + ellipsis, font).Width > maxWidth)
+    {
+        text = text.Substring(0, text.Length - 1);
+    }
+
+    return text.TrimEnd() + ellipsis;
+}
 
         private sealed class TopProductRow
         {
