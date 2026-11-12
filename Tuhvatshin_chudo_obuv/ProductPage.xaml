@@ -82,5 +82,12 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Name="AnalyticsButton"
+                Grid.Row="2"
+                Content="Аналитика"
+                HorizontalAlignment="Right"
+                Margin="10"
+                Visibility="Collapsed"
+                Click="AnalyticsButton_Click"/>
     </Grid>
 </Page>

@@ -56,6 +56,10 @@ namespace Tuhvatshin_chudo_obuv
                     break;
             }
 
+            AnalyticsButton.Visibility = users.RoleID == 3
+    ? Visibility.Visible
+    : Visibility.Collapsed;
+
             if (_isGuest)
             {
                 ComboSort.Visibility = Visibility.Collapsed;
@@ -150,6 +154,14 @@ namespace Tuhvatshin_chudo_obuv
             }
 
             Manager.MainFrame.Navigate(new AddEditPage(_user, product, _draftItems));
+        }
+
+        private void AnalyticsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_user != null && _user.RoleID == 3)
+            {
+                Manager.MainFrame.Navigate(new AnalyticsPage(_user));
+            }
         }
     }
 }

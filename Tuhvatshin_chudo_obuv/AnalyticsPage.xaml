@@ -1,0 +1,80 @@
+﻿<Page x:Class="Tuhvatshin_chudo_obuv.AnalyticsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Аналитика"
+      FontFamily="Calibri">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="Аналитика продаж"
+                   FontSize="26"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,15"/>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,12">
+            <TextBlock Text="С:" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <DatePicker x:Name="StartDatePicker"
+                        SelectedDateChanged="Period_Changed"
+                        Margin="0,0,16,0"/>
+            <TextBlock Text="По:" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <DatePicker x:Name="EndDatePicker"
+                        SelectedDateChanged="Period_Changed"/>
+        </StackPanel>
+
+        <TextBlock x:Name="ErrorText"
+                   Grid.Row="2"
+                   Foreground="Red"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,8"
+                   TextWrapping="Wrap"/>
+
+        <StackPanel Grid.Row="3">
+            <TextBlock x:Name="OrdersSummary"
+                       FontSize="18"
+                       Margin="0,0,0,6"/>
+            <TextBlock x:Name="SalesSummary"
+                       FontSize="18"
+                       Margin="0,0,0,12"/>
+            <TextBlock Text="Топ-5 моделей по количеству проданных пар"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="0,0,0,6"/>
+
+            <DataGrid x:Name="TopProductsGrid"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      Height="280">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Модель"
+                                        Binding="{Binding Name}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="Производитель"
+                                        Binding="{Binding Manufacturer}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="Продано пар"
+                                        Binding="{Binding Quantity}"
+                                        Width="120"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        <Button Grid.Row="4"
+                Content="Экспорт в PDF"
+                HorizontalAlignment="Right"
+                Margin="0,12,0,0"
+                Click="ExportPdf_Click"/>
+    </Grid>
+</Page>
