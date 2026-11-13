@@ -8,6 +8,9 @@ namespace Tuhvatshin_chudo_obuv
 {
     public partial class Products
     {
-        public int TotalQuantity => ProductItems?.Sum(s => s.Quantity) ?? 0;
+        public int TotalQuantity => ProductItems?.Sum(item => item.Quantity) ?? 0;
+
+        public string QuantityAvailability =>
+            (TotalQuantity > 5 ? "много" : "мало");
     }
 }

@@ -56,9 +56,13 @@ namespace Tuhvatshin_chudo_obuv
                     break;
             }
 
+            OrdersButton.Visibility = users.RoleID == 2 || users.RoleID == 3
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+
             AnalyticsButton.Visibility = users.RoleID == 3
-    ? Visibility.Visible
-    : Visibility.Collapsed;
+                ? Visibility.Visible
+                : Visibility.Collapsed;
 
             if (_isGuest)
             {
@@ -76,6 +80,7 @@ namespace Tuhvatshin_chudo_obuv
         {
             var products = Tuhvatshin_chudo_obuvEntities.GetContext()
                 .Products
+                .Include("ProductItems")
                 .ToList();
 
             if (_isGuest)
@@ -161,6 +166,14 @@ namespace Tuhvatshin_chudo_obuv
             if (_user != null && _user.RoleID == 3)
             {
                 Manager.MainFrame.Navigate(new AnalyticsPage(_user));
+            }
+        }
+
+        private void OrdersButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_user != null && (_user.RoleID == 2 || _user.RoleID == 3))
+            {
+                Manager.MainFrame.Navigate(new OrderPage(_user));
             }
         }
     }

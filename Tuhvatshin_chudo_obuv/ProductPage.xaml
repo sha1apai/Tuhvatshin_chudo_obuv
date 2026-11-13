@@ -59,11 +59,6 @@
                         <Image Width="300" Grid.Column="0" Stretch="UniformToFill" HorizontalAlignment="Center" Grid.RowSpan="5">
                             <Image.Source>
                                 <Binding Path="ProductPhotoPath">
-                                    <!--<Binding.TargetNullValue>-->
-                                    <!--<ImageSource>
-                                            /res/picture.png
-                                        </ImageSource>
-                                    </Binding.TargetNullValue>-->
                                 </Binding>
                             </Image.Source>
                         </Image>
@@ -72,22 +67,28 @@
                             <TextBlock Text=" | " FontSize="20"></TextBlock>
                             <TextBlock Text="{Binding Name}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                         </WrapPanel>
-
                         <TextBlock Text="{Binding Categories.CategoryName, StringFormat=Категория: {0}}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="20" ></TextBlock>
-                        <TextBlock Text="{Binding TotalQuantity, StringFormat=В наличии: {0} шт.}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
-                        <TextBlock Text="{Binding Price, StringFormat={}{0:0} рублей}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" FontSize="20" ></TextBlock>
+                        <TextBlock Text="{Binding QuantityAvailability,StringFormat=В наличии: {0}}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
+                        <TextBlock Text="{Binding Price, StringFormat={}{0:0} рублей}" Grid.Column="1" Grid.RowSpan="5" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20" ></TextBlock>
                         <TextBlock Text="{Binding Composition, StringFormat=Состав: {0}}" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                         <Button Content="Офрмить заказ"  Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.RowSpan="5" Name="BtnBuy" Click="BtnBuy_Click" ></Button>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Name="AnalyticsButton"
-                Grid.Row="2"
-                Content="Аналитика"
-                HorizontalAlignment="Right"
-                Margin="10"
-                Visibility="Collapsed"
-                Click="AnalyticsButton_Click"/>
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Name="OrdersButton"
+                    Content="Заказы"
+                    Margin="10"
+                    Visibility="Collapsed"
+                    Click="OrdersButton_Click"/>
+            <Button Name="AnalyticsButton"
+                    Content="Аналитика"
+                    Margin="10"
+                    Visibility="Collapsed"
+                    Click="AnalyticsButton_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

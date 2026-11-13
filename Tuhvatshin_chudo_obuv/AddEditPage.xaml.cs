@@ -53,6 +53,25 @@ namespace Tuhvatshin_chudo_obuv
             {
                 AddItemButton.IsEnabled = false;
             }
+
+            CustomerPanel.Visibility = _user.RoleID == 2 || _user.RoleID == 3
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+
+            if (_user.RoleID == 2 || _user.RoleID == 3)
+            {
+                CustomerComboBox.ItemsSource = context.Users
+                    .Where(client => client.RoleID == 1)
+                    .ToList()
+                    .Select(client => new CustomerOption
+                    {
+                        User = client,
+                        FullName = GetFullName(client)
+                    })
+                    .ToList();
+
+                CustomerComboBox.SelectedIndex = -1;
+            }
         }
 
         private void AddItemButton_Click(object sender, RoutedEventArgs e)
@@ -139,6 +158,19 @@ namespace Tuhvatshin_chudo_obuv
 
         private void ConfirmOrderButton_Click(object sender, RoutedEventArgs e)
         {
+            var orderUser = _user;
+
+            if (_user.RoleID == 2 || _user.RoleID == 3)
+            {
+                var selectedCustomer = CustomerComboBox.SelectedItem as CustomerOption;
+                if (selectedCustomer == null)
+                {
+                    MessageBox.Show("Выберите клиента, на которого оформляется заказ.");
+                    return;
+                }
+
+                orderUser = selectedCustomer.User;
+            }
             if (_user == null || _user.RoleID == 0)
             {
                 MessageBox.Show("Для оформления заказа необходимо войти в систему.");
@@ -190,7 +222,7 @@ namespace Tuhvatshin_chudo_obuv
                     {
                         OrderNumber = orderNumber,
                         OrderDate = DateTime.Now,
-                        UserID = _user.UserID
+                        UserID = orderUser.UserID
                     };
 
                     context.Orders.Add(order);
@@ -264,6 +296,22 @@ namespace Tuhvatshin_chudo_obuv
         private void ComboSize_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private static string GetFullName(Users user)
+        {
+            return string.Join(" ", new[]
+            {
+                user.LastName,
+                user.FirstName,
+                user.MiddleName
+            }.Where(part => !string.IsNullOrWhiteSpace(part)));
+        }
+
+        private sealed class CustomerOption
+        {
+            public Users User { get; set; }
+            public string FullName { get; set; }
         }
     }
 }
